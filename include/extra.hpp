@@ -3,6 +3,7 @@
 
 struct extra
 {
+    char ResultArgs = 'f';
     bool l = false;
     bool c = false;
     bool m = false;
@@ -13,6 +14,6 @@ struct extra
 };
 
 int argcProg(int argc, char** argv, extra *Struc);
-
+void resultOutput(extra *FlagsAndNumbers);
 
 #endif // _EXTRA_ 

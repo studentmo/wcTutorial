@@ -6,13 +6,19 @@ int main(int argc, char** argv)
     extra FlagsAndNumbers;
 
     argcProg(argc, argv, &FlagsAndNumbers);
+    if(FlagsAndNumbers.ResultArgs == 'f')
+    {
+        //FIleCount
+    }
+    resultOutput(&FlagsAndNumbers);
+    std::cout<<std::endl;
     
     std::cout<<argc<<std::endl;
     for (int i = 0; i < argc; i++)
     {
         std::cout<<argv[i]<<std::endl;
     }
-    
+    std::cout<<FlagsAndNumbers.ResultArgs<<std::endl;
     std::cout<<std::endl<<std::endl<<std::endl;
 
     std::cout<<"h = "<<FlagsAndNumbers.h<<std::endl;

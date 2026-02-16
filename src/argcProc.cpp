@@ -13,6 +13,7 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
         {
             STOP = true;
             FlagsAndNumbers->h = true;
+            FlagsAndNumbers->ResultArgs = 'h';
             FlagsAndNumbers->l = false;
             FlagsAndNumbers->c = false;
             FlagsAndNumbers->m = false;
@@ -23,6 +24,7 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
         {
             STOP = true;
             FlagsAndNumbers->v = true;
+            FlagsAndNumbers->ResultArgs = 'v';
             FlagsAndNumbers->l = false;
             FlagsAndNumbers->c = false;
             FlagsAndNumbers->m = false;
@@ -39,6 +41,7 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
             {
             STOP = true;
             FlagsAndNumbers->h = true;
+            FlagsAndNumbers->ResultArgs = 'h';
             FlagsAndNumbers->l = false;
             FlagsAndNumbers->c = false;
             FlagsAndNumbers->m = false;
@@ -49,6 +52,7 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
             {
                 STOP = true;
                 FlagsAndNumbers->v = true;
+                FlagsAndNumbers->ResultArgs = 'v';
                 FlagsAndNumbers->l = false;
                 FlagsAndNumbers->c = false;
                 FlagsAndNumbers->m = false;
@@ -61,8 +65,9 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
             else if (args[j] == 'w')FlagsAndNumbers->w = true;
             else
             {
-                std::cout<<"error = "<<args;
+                std::cout<<"error = "<<args<<std::endl;
                 FlagsAndNumbers->r = true;
+                FlagsAndNumbers->ResultArgs = 'r';
                 FlagsAndNumbers->l = false;
                 FlagsAndNumbers->c = false;
                 FlagsAndNumbers->m = false;

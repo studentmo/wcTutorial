@@ -1,1 +1,29 @@
 #include "extra.hpp"
+#include <iostream>
+
+void MessageError();
+void MessageHelp();
+void MessageVersion();
+
+void resultOutput(extra *FlagsAndNumbers)
+{
+    if (FlagsAndNumbers->ResultArgs == 'f')std::cout<<'f';
+    else if (FlagsAndNumbers->ResultArgs == 'h')MessageHelp();
+    else if (FlagsAndNumbers->ResultArgs == 'v')MessageVersion();
+    else if (FlagsAndNumbers->ResultArgs == 'r')MessageError();
+}
+
+void MessageError()
+{
+    std::cout<<"wc: unknown option\nTry 'wc --help' for more information."; 
+}
+void MessageHelp()
+{
+    std::cout<<"wc:\t-c,"<<"  "<<"--bytes\tprint the byte counts\n"<<"\t-m,"<<"  "<<"--chars\tprint the character counts\n";
+    std::cout<<"\t-l,"<<"  "<<"--lines\tprint the newline counts\n"<<"\t-w,"<<"  "<<"--words\tprint the word counts\n";
+    std::cout<<"\t-h,"<<"  "<<"--help\tdisplay this help and exit\n"<<"\t-v,"<<"  "<<"--version\toutput version information and exits\n";
+}
+void MessageVersion()
+{
+    std::cout<<"wc: version -- "; 
+}
