@@ -21,4 +21,7 @@ Roadmap:
     - default
     - -l --lines
     - -w --words
+    - -v --version
 3. Вывести
+
+Изменение версий
