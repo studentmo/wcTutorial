@@ -18,6 +18,9 @@ fileCount: src/fileCount.cpp include/extra.hpp
 resultOutput: src/resultOutput.cpp include/extra.hpp
 	$(CPPFLAGG) -c src/resultOutput.cpp -Iinclude/ -o src/resultOutput.o
 
+vic:
+	g++ ./src/vic.cpp -o ./bin/utils/vic.exe
+
 OFile: main argcProc fileCount resultOutput
 	
 

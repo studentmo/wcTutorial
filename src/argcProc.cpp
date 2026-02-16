@@ -65,7 +65,7 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
             else if (args[j] == 'w')FlagsAndNumbers->w = true;
             else
             {
-                std::cout<<"error = "<<args<<std::endl;
+                FlagsAndNumbers->Error = args;
                 FlagsAndNumbers->r = true;
                 FlagsAndNumbers->ResultArgs = 'r';
                 FlagsAndNumbers->l = false;

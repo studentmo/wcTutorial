@@ -1,7 +1,7 @@
 #include "extra.hpp"
 #include <iostream>
 
-void MessageError();
+void MessageError(extra FlagsAndNumbers);
 void MessageHelp();
 void MessageVersion();
 
@@ -10,12 +10,12 @@ void resultOutput(extra *FlagsAndNumbers)
     if (FlagsAndNumbers->ResultArgs == 'f')std::cout<<'f';
     else if (FlagsAndNumbers->ResultArgs == 'h')MessageHelp();
     else if (FlagsAndNumbers->ResultArgs == 'v')MessageVersion();
-    else if (FlagsAndNumbers->ResultArgs == 'r')MessageError();
+    else if (FlagsAndNumbers->ResultArgs == 'r')MessageError(*FlagsAndNumbers);
 }
 
-void MessageError()
+void MessageError(extra FlagsAndNumbers)
 {
-    std::cout<<"wc: unknown option\nTry 'wc --help' for more information."; 
+    std::cout<<"wc: "<<FlagsAndNumbers.Error<<" unknown option\nTry 'wc --help' for more information."; 
 }
 void MessageHelp()
 {
@@ -25,5 +25,5 @@ void MessageHelp()
 }
 void MessageVersion()
 {
-    std::cout<<"wc: version -- "; 
+    std::cout<<"wc: version -- "<<VERSION_MAJOR<<"."<<VERSION_MINOR; 
 }

@@ -1,9 +1,14 @@
 #ifndef _EXTRA_ 
 #define _EXTRA_ 
+#include <string>
+
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 0
 
 struct extra
 {
     char ResultArgs = 'f';
+    std::string Error;
     bool l = false;
     bool c = false;
     bool m = false;
