@@ -4,8 +4,8 @@
 int main()
 {
     int VERSION_MAJOR = 0, VERSION_MINOR = 0; 
-    std::streampos VERSIONMAJORITERATOR;
-    std::streampos VERSIONMINORITERATOR;
+    std::streampos verMAJORiter;
+    std::streampos verMINORiter;
 
     std::fstream file("./include/MainH.hpp", std::ios::in | std::ios::out);
     if(!(file.is_open()))
@@ -19,12 +19,12 @@ int main()
     {
         if(temp == "VERSION_MAJOR")
         {
-            VERSIONMAJORITERATOR = file.tellg();
+            verMAJORiter = file.tellg();
             file>>VERSION_MAJOR;
         }
         if(temp == "VERSION_MINOR")
         {
-            VERSIONMINORITERATOR = file.tellg();
+            verMINORiter = file.tellg();
             file>>VERSION_MINOR;
         }
     }
@@ -32,9 +32,9 @@ int main()
 
     ++VERSION_MAJOR; ++VERSION_MINOR;
 
-    file.seekp(VERSIONMAJORITERATOR);
+    file.seekp(verMAJORiter);
     file<<VERSION_MAJOR;
-    file.seekp(VERSIONMINORITERATOR);
+    file.seekp(verMINORiter);
     file<<VERSION_MINOR;
     return 0;
 }
