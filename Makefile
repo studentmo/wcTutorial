@@ -1,4 +1,5 @@
 CPPFLAGG = g++ -g -Wall
+ARGS:=""
 
 standard: clean OFile
 	$(CPPFLAGG) src/*.o -Iinclude/ -o bin/Debug_main.exe
@@ -23,12 +24,14 @@ vic:
 
 OFile: main argcProc fileCount resultOutput
 	
+vic.exe: vic
+	./bin/utils/vic.exe 
 
 test: standard 
-	./bin/Debug_main.exe
+	./bin/Debug_main.exe 
 
 gdb_test: standard 
-	gdb ./bin/Debug_main.exe
+	gdb ./bin/Debug_main.exe $(ARGS)
 
 clean:
 	rm -f bin/*.exe

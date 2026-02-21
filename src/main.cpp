@@ -8,7 +8,7 @@ int main(int argc, char** argv)
     argcProg(argc, argv, &FlagsAndNumbers);
     if(FlagsAndNumbers.ResultArgs == 'f')
     {
-        //FIleCount
+        FIleCount(argv[1], &FlagsAndNumbers);
     }
     resultOutput(&FlagsAndNumbers);
     std::cout<<std::endl;
@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     std::cout<<"h = "<<FlagsAndNumbers.h<<std::endl;
     std::cout<<"v = "<<FlagsAndNumbers.v<<std::endl;
-    std::cout<<"l = "<<FlagsAndNumbers.l<<std::endl;
+    std::cout<<"l = "<<FlagsAndNumbers.l<<"\tlines = "<<FlagsAndNumbers.Lines<<std::endl;
     std::cout<<"m = "<<FlagsAndNumbers.m<<std::endl;
     std::cout<<"c = "<<FlagsAndNumbers.c<<std::endl;
     std::cout<<"w = "<<FlagsAndNumbers.w<<std::endl;
