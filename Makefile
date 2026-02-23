@@ -41,6 +41,6 @@ cleanExe:
 realease: OFile
 	$(CPPFLAGG) src/*.o -Iinclude/ -o bin/Main.exe
 
-update: cleanAll realease
+update: cleanAll vicExe realease
 	git add -A
 	git commit

@@ -20,7 +20,7 @@ int main(int argc, char** argv)
     std::string temp;
     while(myFile>>temp)
     {
-        if (temp=="VERSION_MAJOR" & arg == "-Ma")
+        if (temp=="VERSION_MAJOR" & arg == "Ma")
         {
             VERSION_MAJOR_POINT = myFile.tellg();
             VERSION_MAJOR_POINT+=1;
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
     }
     myFile.clear();
 
-    if(arg == "-Ma")
+    if(arg == "Ma")
     {
     ++VERSION_MAJOR;
     myFile.seekp(VERSION_MAJOR_POINT);

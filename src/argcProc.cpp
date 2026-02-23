@@ -5,7 +5,7 @@
 int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
 {
     bool STOP = false;
-    for (int i = 1; i < argc; i++)
+    for (int i = 2; i < argc; i++)
     {
         if(STOP == 1)break; 
         std::string args = argv[i];
@@ -77,5 +77,5 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
             }
         }     
     }
-    return 1;// Help or Version or Error or Flags
+    return 1;
 }

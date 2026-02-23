@@ -3,7 +3,7 @@
 #include <string>
 
 #define VERSION_MAJOR 0
-#define VERSION_MINOR 1
+#define VERSION_MINOR 4
 
 struct extra
 {
@@ -16,9 +16,14 @@ struct extra
     bool v = false;
     bool h = false;
     bool r = false;
+    int Lines = 0;
+    int Bytes = 0;
+    int Chars = 0;
+    int Words = 0;
 };
 
 int argcProg(int argc, char** argv, extra *Struc);
+int fIleCount(std::string path,extra *FlagsAndNumbers);
 void resultOutput(extra *FlagsAndNumbers);
 
 #endif // _EXTRA_ 
