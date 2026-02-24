@@ -28,28 +28,10 @@ Roadmap:
 implement argcProc читает аргументы и сохраняет в структуру флагов (вывод флагов в консоль для дебага)
 implement fileCount считает то, что задано флагами и сохраняет в структуру цифр (для дебага вывести это в консоль)
 implement resultOutput выводит нужную информацию в консольv
+implement reading encoding
 
-#ifndef _EXTRA_ 
-#define _EXTRA_ 
-#include <string>
-
-#define VERSION_MAJOR 0
-#define VERSION_MINOR 0
-
-struct extra
-{
-    char ResultArgs = 'f';
-    std::string Error;
-    bool l = false;
-    bool c = false;
-    bool m = false;
-    bool w = false;
-    bool v = false;
-    bool h = false;
-    bool r = false;
-};
-
-int argcProg(int argc, char** argv, extra *Struc);
-void resultOutput(extra *FlagsAndNumbers);
-
-#endif // _EXTRA_ 
+Chars:
+    If in binary, it counts enter as two characters, or enter as one character
+    Worked through get()
+Bytes
+    Same as Char, but depends on encoding
