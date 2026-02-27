@@ -12,5 +12,8 @@ int main(int argc, char** argv)
     if(argc > 2)
     {OpS.Output(&argc, argv);}
     else
-    {OpS.DefaultOutput(argv);}
+    {
+        if(OpS.InfoOutput(argv[1])){}
+        else OpS.DefaultOutput(argv);
+    }
 }

@@ -4,12 +4,14 @@ src = src/main.o src/OutputSystem.o
 MinorUpdate: bin/my_wc.exe
 	git add bin/my_wc.exe
 	rm -f src/*.o
-	git commit
+	git commit 
+	#Вызвать vic.exe VERSION_MINOR += 1
 
 MajorUpdate: bin/my_wc.exe
 	git add bin/my_wc.exe
 	rm -f src/*.o
 	git commit
+	#Вызвать vic.exe VERSION_MAJOR += 1, VERSION_MINOR = 0
 
 bin/my_wc.exe: $(src)
 	@$(CppF) src/*.o -o bin/my_wc.exe -g3 -O3 

@@ -23,7 +23,7 @@ Roadmap:
     - default
     - -l --lines
     - -w --words
-    - -s --symbols
+    - -c --chars
     - -b --bytes
     - -v --version
 3. Вывести
