@@ -2,71 +2,127 @@
 #include <iostream>
 #include <fstream>
 #include <functional>
+#include <thread>
+#include <vector>
 
-void Words(std::string temp, extra *FlagsAndNumbers);
-void Chars(char Ctemp, extra *FlagsAndNumbers);
-void Lines(std::string Ltemp, extra *FlagsAndNumbers);
+void Words(std::string path, extra *FlagsAndNumbers);
+void Chars(std::string path, extra *FlagsAndNumbers);
+void Lines(std::string path, extra *FlagsAndNumbers);
+void Bytes(extra *FlagsAndNumbers);
 
 int fIleCount(std::string path, extra *FlagsAndNumbers)
+{
+    std::function<void(std::string, extra*)> OptionCounter;
+    std::function<void(std::string, extra*)> WordsFunThread;
+    std::function<void(std::string, extra*)> LinesFunThread;
+    std::function<void(extra*)> FunBytes;
+    std::vector<std::thread> VecThread;
+    VecThread.emplace_back(LinesFunThread, path, FlagsAndNumbers);
+    VecThread.emplace_back(WordsFunThread, path, FlagsAndNumbers);
+    bool MainThread = false;
+    bool BoolWordsThread = false;
+    bool BoolLinesThread = false;
+    bool BoolBytes = false;
+    bool CharsUsing = false;
+
+    if(FlagsAndNumbers->m)
+    {
+        OptionCounter=Chars;
+        MainThread = true;
+        CharsUsing = true;
+    }
+    if(FlagsAndNumbers->c)
+    {
+        if(!CharsUsing)
+        {
+            MainThread =  Chars;
+            MainThread = true;
+            BoolBytes = true;
+        }
+    }
+    if(FlagsAndNumbers->l)
+    {
+        if(!MainThread)
+        {
+            OptionCounter = Lines;
+            MainThread = true;
+        }
+        else 
+        {
+            LinesFunThread = Lines;
+            BoolLinesThread = true;
+        }
+    }
+    if(FlagsAndNumbers->w)
+    {
+        if(!MainThread)
+        {
+            OptionCounter = Words;
+            MainThread = true;
+        }
+        else
+        {
+            WordsFunThread = Words;
+            BoolWordsThread = true;
+        }
+    }
+
+    if(BoolLinesThread)VecThread[0];
+    if(BoolWordsThread)VecThread[1];
+    OptionCounter(path, FlagsAndNumbers);
+    if(BoolBytes)FunBytes(FlagsAndNumbers);
+
+    if(BoolLinesThread)VecThread[0].join();
+    if(BoolWordsThread)VecThread[1].join();
+    return 1;
+}
+
+void Words(std::string path, extra *FlagsAndNumbers)
 {
     std::fstream myFile(path, std::fstream::in | std::fstream::binary);
     if (!(myFile.is_open()))
     {
         std::cout<<"Error\n";
-        return 1;
     }
-
-    std::function<void(std::string,extra*)> OptionCounter;
-
-    OptionCounter = Words;
 
     std::string temp;
     while(myFile>>temp)
     {
-        OptionCounter(temp, FlagsAndNumbers);
+        if (temp!=" ")FlagsAndNumbers->Words++;
     }
-    myFile.clear();
-    myFile.seekg(0);
+    std::cout<<"Words worked \n";
+    myFile.close();
+}
+
+void Chars(std::string path, extra *FlagsAndNumbers)
+{
+    std::fstream myFile(path, std::fstream::in | std::fstream::binary);
+    if (!(myFile.is_open()))
+    {
+        std::cout<<"Error\n";
+    }
 
     char Ctemp;
-    std::function<void(char,extra*)> COptionCounter;
-    COptionCounter = Chars;
-    while(myFile.get(Ctemp))
+    while(myFile.get(Ctemp))FlagsAndNumbers->Chars++;
+    std::cout<<"Chars worked \n";
+    myFile.close();
+}
+
+void Lines(std::string path, extra *FlagsAndNumbers)
+{
+    std::fstream myFile(path, std::fstream::in | std::fstream::binary);
+    if (!(myFile.is_open()))
     {
-        COptionCounter(Ctemp, FlagsAndNumbers);
+        std::cout<<"Error\n";
     }
-    
-    myFile.clear();
-    myFile.seekg(0);
 
     std::string Ltemp;
-    OptionCounter = Lines;
-    while(getline(myFile, Ltemp))
-    {
-        OptionCounter(Ltemp, FlagsAndNumbers);
-    }
-
+    while(getline(myFile, Ltemp))FlagsAndNumbers->Lines++;
+    std::cout<<"Lines worked \n";
     myFile.close();
-    return 1;
 }
-
-void Words(std::string temp, extra *FlagsAndNumbers)
+void Bytes(extra *FlagsAndNumbers)
 {
-    if (temp!=" ")
-    {
-    FlagsAndNumbers->Words++;
-    std::cout<<temp<<"\n";
-    }
-}
-
-void Chars(char Ctemp, extra *FlagsAndNumbers)
-{
-    std::cout<<Ctemp;
-    FlagsAndNumbers->Chars++;
-}
-
-void Lines(std::string Ltemp, extra *FlagsAndNumbers)
-{
-    std::cout<<Ltemp;
-    FlagsAndNumbers->Lines++;
+    FlagsAndNumbers->Bytes = FlagsAndNumbers->Chars*1;// умножаем в зависимости от кодировки
+    std::cout<<"Bytes worked\n";
 }
