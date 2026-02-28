@@ -7,7 +7,7 @@ void MessageVersion();
 
 void resultOutput(extra *FlagsAndNumbers)
 {
-    if (FlagsAndNumbers->ResultArgs == 'f')std::cout<<'f';
+    if (FlagsAndNumbers->ResultArgs == 'f')std::cout<<"Cout flags down\n";
     else if (FlagsAndNumbers->ResultArgs == 'h')MessageHelp();
     else if (FlagsAndNumbers->ResultArgs == 'v')MessageVersion();
     else if (FlagsAndNumbers->ResultArgs == 'r')MessageError(*FlagsAndNumbers);

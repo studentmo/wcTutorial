@@ -2,23 +2,25 @@
 #include <iostream>
 #include <string>
 
-int vic(int argc, char** argv)
+int main(int argc, char** argv)
 {
     int VERSION_MAJOR;
     int VERSION_MINOR;
     std::streampos VERSION_MAJOR_POINT;
     std::streampos VERSION_MINOR_POINT;
+    std::string arg = argv[1];
 
-    std::fstream myFile("./include/extra.hpp", std::fstream::out | std::fstream::in | std::ios::binary);
+    std::fstream myFile("./include/extra.hpp", std::fstream::out | std::fstream::in | std::fstream::binary);
     if (!(myFile.is_open()))
     {
         std::cout<<"Error\n";
         return 1;
-    }
+    } 
+
     std::string temp;
     while(myFile>>temp)
     {
-        if (temp=="VERSION_MAJOR" && argv[1] == "Ma")
+        if (temp=="VERSION_MAJOR" & arg == "Ma")
         {
             VERSION_MAJOR_POINT = myFile.tellg();
             VERSION_MAJOR_POINT+=1;
@@ -31,19 +33,36 @@ int vic(int argc, char** argv)
             VERSION_MINOR_POINT+=1;
             myFile>>VERSION_MINOR;
             
-        }
-        
+        }  
     }
     myFile.clear();
 
-    myFile.seekp(VERSION_MAJOR_POINT);
+    if(arg == "Ma")
+    {
     ++VERSION_MAJOR;
+    myFile.seekp(VERSION_MAJOR_POINT);
     myFile<<VERSION_MAJOR;
     myFile.seekp(VERSION_MINOR_POINT);
+    myFile<<0;
+    int ColNumbers=0;
+    while (VERSION_MINOR>0)
+        {
+            VERSION_MINOR/=10;
+            ColNumbers++;
+        }
+    for (int i = 0; i < ColNumbers-1; i++)
+        {
+            myFile<<' ';
+        }
+    }
+
+    else 
+    {
     ++VERSION_MINOR;
+    myFile.seekp(VERSION_MINOR_POINT);
     myFile<<VERSION_MINOR;
+    }
+
     myFile.close();
-
-
 }
 

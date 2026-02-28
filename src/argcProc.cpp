@@ -77,5 +77,5 @@ int argcProg(int argc, char** argv, extra *FlagsAndNumbers)
             }
         }     
     }
-    return 1;// Help or Version or Error or Flags
+    return 1;
 }

@@ -1,11 +1,8 @@
 CPPFLAGG = g++ -g -Wall
 ARGS:=""
 
-standard: clean OFile
+standard: cleanExe OFile
 	$(CPPFLAGG) src/*.o -Iinclude/ -o bin/Debug_main.exe
-
-#extra: src/extra.cpp include/extra.hpp
-#	$(CPPFLAGG) -c src/extra.cpp -Iinclude/ -o src/extra.o
 
 main: src/main.cpp include/extra.hpp
 	$(CPPFLAGG) -c src/main.cpp -Iinclude/ -o src/main.o
@@ -20,7 +17,7 @@ resultOutput: src/resultOutput.cpp include/extra.hpp
 	$(CPPFLAGG) -c src/resultOutput.cpp -Iinclude/ -o src/resultOutput.o
 
 vic:
-	g++ ./src/vic.cpp -o ./bin/utils/vic.exe
+	$(CPPFLAGG) ./src/vic.cpp -o ./bin/utils/vic.exe
 
 OFile: main argcProc fileCount resultOutput
 	
@@ -28,18 +25,24 @@ vic.exe: vic
 	./bin/utils/vic.exe 
 
 test: standard 
-	./bin/Debug_main.exe 
+	./bin/Debug_main.exe $(ARGS)
 
 gdb_test: standard 
 	gdb ./bin/Debug_main.exe $(ARGS)
 
-clean:
+vicExe:
+	./bin/utils/vic.exe $(ARGS)
+
+cleanAll:
 	rm -f bin/*.exe
 	rm -f src/*.o
+
+cleanExe:
+	rm -f bin/*.exe
 
 realease: OFile
 	$(CPPFLAGG) src/*.o -Iinclude/ -o bin/Main.exe
 
-update: clean realease
+update: cleanAll vicExe realease
 	git add -A
 	git commit

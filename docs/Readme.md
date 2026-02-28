@@ -28,3 +28,10 @@ Roadmap:
 implement argcProc читает аргументы и сохраняет в структуру флагов (вывод флагов в консоль для дебага)
 implement fileCount считает то, что задано флагами и сохраняет в структуру цифр (для дебага вывести это в консоль)
 implement resultOutput выводит нужную информацию в консольv
+implement reading encoding
+
+Chars:
+    If in binary, it counts enter as two characters, or enter as one character
+    Worked through get()
+Bytes
+    Same as Char, but depends on encoding

@@ -2,8 +2,8 @@
 #define _EXTRA_ 
 #include <string>
 
-#define VERSION_MAJOR 7
-#define VERSION_MINOR 8
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 6
 
 struct extra
 {
@@ -16,14 +16,15 @@ struct extra
     bool v = false;
     bool h = false;
     bool r = false;
-    int Lines;
-    int Bytes;
-    int Chars;
-    int Words;
+    int Lines = 0;
+    int Bytes = 0;
+    int Chars = 0;
+    int Words = 0;
 };
 
 int FIleCount(std::string argv ,extra *FlagsAndNumbers);
 int argcProg(int argc, char** argv, extra *Struc);
+int fIleCount(std::string path,extra *FlagsAndNumbers);
 void resultOutput(extra *FlagsAndNumbers);
 
 #endif // _EXTRA_ 
