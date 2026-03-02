@@ -11,7 +11,7 @@ int main(int argc, char** argv)
         fIleCount(argv[1], &FlagsAndNumbers);
     }
     resultOutput(&FlagsAndNumbers);
-    std::cout<<std::endl;
+    /*std::cout<<std::endl;
     
     std::cout<<"argc = "<<argc<<std::endl;
     for (int i = 0; i < argc; i++)
@@ -32,6 +32,6 @@ int main(int argc, char** argv)
     std::cout<<"Chars = "<<FlagsAndNumbers.Chars<<std::endl;
     std::cout<<"Bytes = "<<FlagsAndNumbers.Bytes<<std::endl;
     std::cout<<"Words = "<<FlagsAndNumbers.Words<<std::endl;
-
+    */
     return 0;
 }

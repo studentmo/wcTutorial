@@ -1,4 +1,4 @@
-#ifndef _EXTRA_ 
+32759ef _EXTRA_ 
 #define _EXTRA_ 
 #include <string>
 

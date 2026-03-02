@@ -1,21 +1,22 @@
 #include "extra.hpp"
 #include <iostream>
 
-void MessageError(extra FlagsAndNumbers);
+void MessageError(extra *FlagsAndNumbers);
 void MessageHelp();
 void MessageVersion();
+void MessageFlags(extra *FlagsAndNumbers);
 
 void resultOutput(extra *FlagsAndNumbers)
 {
-    if (FlagsAndNumbers->ResultArgs == 'f')std::cout<<"Cout flags down\n";
+    if (FlagsAndNumbers->ResultArgs == 'f')MessageFlags(FlagsAndNumbers);
     else if (FlagsAndNumbers->ResultArgs == 'h')MessageHelp();
     else if (FlagsAndNumbers->ResultArgs == 'v')MessageVersion();
-    else if (FlagsAndNumbers->ResultArgs == 'r')MessageError(*FlagsAndNumbers);
+    else if (FlagsAndNumbers->ResultArgs == 'r')MessageError(FlagsAndNumbers);
 }
 
-void MessageError(extra FlagsAndNumbers)
+void MessageError(extra *FlagsAndNumbers)
 {
-    std::cout<<"wc: "<<FlagsAndNumbers.Error<<" unknown option\nTry 'wc --help' for more information."; 
+    std::cout<<"wc: "<<FlagsAndNumbers->Error<<" unknown option\nTry 'wc --help' for more information."; 
 }
 void MessageHelp()
 {
@@ -26,4 +27,12 @@ void MessageHelp()
 void MessageVersion()
 {
     std::cout<<"wc: version -- "<<VERSION_MAJOR<<"."<<VERSION_MINOR; 
+}
+void MessageFlags(extra *FlagsAndNumbers)
+{
+    std::cout<<"wc:\t";
+    if(FlagsAndNumbers->m)std::cout<<FlagsAndNumbers->Chars<<"\t";
+    if(FlagsAndNumbers->c)std::cout<<FlagsAndNumbers->Bytes<<"\t";
+    if(FlagsAndNumbers->w)std::cout<<FlagsAndNumbers->Words<<"\t";
+    if(FlagsAndNumbers->l)std::cout<<FlagsAndNumbers->Lines<<"\t";
 }
