@@ -4,6 +4,7 @@
 #include <functional>
 #include <thread>
 #include <vector>
+#include <iomanip>
 
 void Words(std::fstream *myFile, extra *FlagsAndNumbers);
 void Chars(std::fstream *myFile, extra *FlagsAndNumbers);
@@ -22,6 +23,16 @@ int fIleCount(std::string path, extra *FlagsAndNumbers)
         std::cout<<"Error\n";
     }
 
+    unsigned char tmpchar;
+    myFile>>tmpchar;
+    std::cout<<std::hex<<std::setw(2)<<static_cast<unsigned int>(tmpchar)<<" ";
+        myFile>>tmpchar;
+    std::cout<<std::hex<<std::setw(2)<<static_cast<unsigned int>(tmpchar)<<" ";
+    int Endcoding;
+    if("ff fe")Endcoding=16;
+    if("23 23")Endcoding=8;
+
+    std::cout<<std::dec;
     if(FlagsAndNumbers->m)
     {
         OptionCounter=Chars;
@@ -54,23 +65,29 @@ int fIleCount(std::string path, extra *FlagsAndNumbers)
 
 void Words(std::fstream *myFile, extra *FlagsAndNumbers)
 {
+    myFile->seekp(0);
     std::string temp;
     while(*myFile>>temp)
     {
         if (temp!=" ")FlagsAndNumbers->Words++;
     }
+    myFile->clear();
 }
 
 void Chars(std::fstream *myFile, extra *FlagsAndNumbers)
 {
+    myFile->seekp(0);
     char Ctemp;
     while(myFile->get(Ctemp))FlagsAndNumbers->Chars++;
+    myFile->clear();
 }
 
 void Lines(std::fstream *myFile, extra *FlagsAndNumbers)
 {
+    myFile->seekp(0);
     std::string Ltemp;
     while(getline(*myFile, Ltemp))FlagsAndNumbers->Lines++;
+    myFile->clear();
 }
 void Bytes(extra *FlagsAndNumbers)
 {

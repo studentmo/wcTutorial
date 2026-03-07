@@ -1,4 +1,4 @@
-32759ef _EXTRA_ 
+#ifndef _EXTRA_ 
 #define _EXTRA_ 
 #include <string>
 
@@ -22,9 +22,9 @@ struct extra
     int Words = 0;
 };
 
-int FIleCount(std::string argv ,extra *FlagsAndNumbers);
+int FIleCount(std::string argv, extra *FlagsAndNumbers);
 int argcProg(int argc, char** argv, extra *Struc);
-int fIleCount(std::string path,extra *FlagsAndNumbers);
+int fIleCount(std::string path, extra *FlagsAndNumbers);
 void resultOutput(extra *FlagsAndNumbers);
 
 #endif // _EXTRA_ 
