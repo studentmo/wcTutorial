@@ -20,9 +20,6 @@ vic:
 	$(CPPFLAGG) ./src/vic.cpp -o ./bin/utils/vic.exe
 
 OFile: main argcProc fileCount resultOutput
-	
-vic.exe: vic
-	./bin/utils/vic.exe 
 
 test: standard 
 	./bin/Debug_main.exe $(ARGS)
