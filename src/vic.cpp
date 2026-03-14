@@ -27,7 +27,7 @@ int main(int argc, char** argv)
             myFile>>VERSION_MAJOR;
             
         }
-        if (temp=="VERSION_MINOR" && argv[1] == "Mi")
+        if (temp=="VERSION_MINOR" && arg == "Mi")
         {
             VERSION_MINOR_POINT = myFile.tellg();
             VERSION_MINOR_POINT+=1;

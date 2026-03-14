@@ -21,7 +21,7 @@ vic:
 
 OFile: main argcProc fileCount resultOutput
 
-test: standard 
+test: standard
 	./bin/Debug_main.exe $(ARGS)
 
 gdb_test: standard 

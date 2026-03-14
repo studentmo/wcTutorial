@@ -7,15 +7,12 @@
 #include <iomanip>
 
 void Words(std::fstream *myFile, extra *FlagsAndNumbers);
-void Bytes(std::fstream *myFile, extra *FlagsAndNumbers);
+void Bytes(std::fstream *myFile, extra *FlagsAndNumbers, int Endcoding);
 void Lines(std::fstream *myFile, extra *FlagsAndNumbers);
-void Byte(extra *FlagsAndNumbers);
 
 int fIleCount(std::string path, extra *FlagsAndNumbers)
 {
     std::function<void(std::fstream*, extra*)> OptionCounter;
-
-    bool BytesUsing = false;
 
     std::fstream myFile(path, std::fstream::in | std::fstream::binary);
     if (!(myFile.is_open()))
@@ -44,21 +41,9 @@ int fIleCount(std::string path, extra *FlagsAndNumbers)
     */
 
     std::cout<<std::dec;
-    if(FlagsAndNumbers->c)
+    if(FlagsAndNumbers->c || FlagsAndNumbers->m)
     {
-        OptionCounter=Bytes;
-        OptionCounter(&myFile, FlagsAndNumbers);
-        BytesUsing = true;
-    }
-    if(FlagsAndNumbers->m)
-    {
-        if(!BytesUsing)
-        {
-            OptionCounter=Chars;
-            OptionCounter(&myFile, FlagsAndNumbers);
-            Bytes(FlagsAndNumbers);
-        }     
-        Bytes(FlagsAndNumbers);   
+        Bytes(&myFile, FlagsAndNumbers, Encoding);
     }
     if(FlagsAndNumbers->l)
     {
@@ -85,14 +70,44 @@ void Words(std::fstream *myFile, extra *FlagsAndNumbers)
     myFile->clear();
 }
 
-void Bytes(std::fstream *myFile, extra *FlagsAndNumbers)
+void Bytes(std::fstream *myFile, extra *FlagsAndNumbers, int Endcoding)
 {
     myFile->seekp(0);
-    char Ctemp;
-    while(myFile->get(Ctemp))
+    char Btemp;
+    int FlagSkip = 0;
+    if(Endcoding==8)//8
     {
-        FlagsAndNumbers->Bytes++;
-        if((Ctemp & 0xc0) !=0x80) FlagsAndNumbers->Chars++; //8
+        while(myFile->get(Btemp))
+        {
+            FlagsAndNumbers->Bytes++;
+            if((Btemp & 0xc0) !=0x80) FlagsAndNumbers->Chars++;
+        }
+    }
+    if(Endcoding==16)//16
+    {
+        while(myFile->get(Btemp))
+        {
+            if(FlagSkip != 0)
+            {
+                FlagSkip--;
+                break;
+            }
+            FlagsAndNumbers->Bytes++;
+            if((Btemp & 0xfc) ==0xd8) 
+            {
+                FlagsAndNumbers->Chars++;
+                FlagSkip=3;
+            }
+            else if((Btemp & 0xfc) ==0xdc)
+            {
+                std::cerr<<"Error in the structure of the suregists encoding";
+            }
+            else
+            {
+                FlagsAndNumbers->Chars++;
+                FlagSkip=1;
+            }
+        }
     }
     myFile->clear();
 }
@@ -103,11 +118,4 @@ void Lines(std::fstream *myFile, extra *FlagsAndNumbers)
     std::string Ltemp;
     while(getline(*myFile, Ltemp))FlagsAndNumbers->Lines++;
     myFile->clear();
-}
-void Chars(extra *FlagsAndNumbers)
-{
-    for(char tempChar : tempLine)
-    {
-        if((tempChar & 0xc0) !=0x80) charCount++;
-    }
 }
