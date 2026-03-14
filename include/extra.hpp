@@ -3,7 +3,7 @@
 #include <string>
 
 #define VERSION_MAJOR 0
-#define VERSION_MINOR 6
+#define VERSION_MINOR 8
 
 struct extra
 {
@@ -22,9 +22,9 @@ struct extra
     int Words = 0;
 };
 
-int FIleCount(std::string argv ,extra *FlagsAndNumbers);
+int FIleCount(std::string argv, extra *FlagsAndNumbers);
 int argcProg(int argc, char** argv, extra *Struc);
-int fIleCount(std::string path,extra *FlagsAndNumbers);
+int fIleCount(std::string path, extra *FlagsAndNumbers);
 void resultOutput(extra *FlagsAndNumbers);
 
 #endif // _EXTRA_ 
