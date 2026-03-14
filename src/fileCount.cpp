@@ -7,15 +7,15 @@
 #include <iomanip>
 
 void Words(std::fstream *myFile, extra *FlagsAndNumbers);
-void Chars(std::fstream *myFile, extra *FlagsAndNumbers);
+void Bytes(std::fstream *myFile, extra *FlagsAndNumbers);
 void Lines(std::fstream *myFile, extra *FlagsAndNumbers);
-void Bytes(extra *FlagsAndNumbers);
+void Byte(extra *FlagsAndNumbers);
 
 int fIleCount(std::string path, extra *FlagsAndNumbers)
 {
     std::function<void(std::fstream*, extra*)> OptionCounter;
 
-    bool CharsUsing = false;
+    bool BytesUsing = false;
 
     std::fstream myFile(path, std::fstream::in | std::fstream::binary);
     if (!(myFile.is_open()))
@@ -23,25 +23,36 @@ int fIleCount(std::string path, extra *FlagsAndNumbers)
         std::cout<<"Error\n";
     }
 
-    unsigned char tmpchar;
-    myFile>>tmpchar;
-    std::cout<<std::hex<<std::setw(2)<<static_cast<unsigned int>(tmpchar)<<" ";
-        myFile>>tmpchar;
-    std::cout<<std::hex<<std::setw(2)<<static_cast<unsigned int>(tmpchar)<<" ";
-    int Endcoding;
-    if("ff fe")Endcoding=16;
-    if("23 23")Endcoding=8;
+    int Encoding;
+    char tmpChar;
+    char tmpChar1;
+    myFile>>tmpChar;
+    myFile>>tmpChar1;
+    if(tmpChar==-1 && tmpChar1==-2)Encoding=16;
+    else if(tmpChar==76 && tmpChar1==97)Encoding=8;
+    
+    /*
+    -1 -2 16
+    76 97 8
+    */
+
+    /*
+    for(char tempChar : tempLine)
+    {
+        if((tempChar & 0xc0) !=0x80) charCount++;
+    }
+    */
 
     std::cout<<std::dec;
-    if(FlagsAndNumbers->m)
-    {
-        OptionCounter=Chars;
-        OptionCounter(&myFile, FlagsAndNumbers);
-        CharsUsing = true;
-    }
     if(FlagsAndNumbers->c)
     {
-        if(!CharsUsing)
+        OptionCounter=Bytes;
+        OptionCounter(&myFile, FlagsAndNumbers);
+        BytesUsing = true;
+    }
+    if(FlagsAndNumbers->m)
+    {
+        if(!BytesUsing)
         {
             OptionCounter=Chars;
             OptionCounter(&myFile, FlagsAndNumbers);
@@ -74,11 +85,15 @@ void Words(std::fstream *myFile, extra *FlagsAndNumbers)
     myFile->clear();
 }
 
-void Chars(std::fstream *myFile, extra *FlagsAndNumbers)
+void Bytes(std::fstream *myFile, extra *FlagsAndNumbers)
 {
     myFile->seekp(0);
     char Ctemp;
-    while(myFile->get(Ctemp))FlagsAndNumbers->Chars++;
+    while(myFile->get(Ctemp))
+    {
+        FlagsAndNumbers->Bytes++;
+        if((Ctemp & 0xc0) !=0x80) FlagsAndNumbers->Chars++; //8
+    }
     myFile->clear();
 }
 
@@ -89,7 +104,10 @@ void Lines(std::fstream *myFile, extra *FlagsAndNumbers)
     while(getline(*myFile, Ltemp))FlagsAndNumbers->Lines++;
     myFile->clear();
 }
-void Bytes(extra *FlagsAndNumbers)
+void Chars(extra *FlagsAndNumbers)
 {
-    FlagsAndNumbers->Bytes = FlagsAndNumbers->Chars*1;// умножаем в зависимости от кодировки
+    for(char tempChar : tempLine)
+    {
+        if((tempChar & 0xc0) !=0x80) charCount++;
+    }
 }
